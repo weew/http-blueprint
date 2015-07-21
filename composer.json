@@ -1,0 +1,26 @@
+{
+    "name": "weew/php-http-blueprint",
+    "description": "Very basic blueprint server for API prototyping.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Maxim Kott",
+            "email": "maximkott@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "": "src/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^4.7"
+    },
+    "require": {
+        "weew/php-http": "0.*",
+        "weew/php-url": "0.*",
+        "weew/php-helpers-string": "0.*",
+        "weew/php-helpers-array": "0.*",
+        "weew/php-http-server": "0.*"
+    }
+}
