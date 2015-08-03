@@ -21,6 +21,7 @@
         "weew/php-url": "0.*",
         "weew/php-helpers-string": "0.*",
         "weew/php-helpers-array": "0.*",
-        "weew/php-http-server": "0.*"
+        "weew/php-http-server": "0.*",
+        "weew/php-globals": "^0.0.1"
     }
 }

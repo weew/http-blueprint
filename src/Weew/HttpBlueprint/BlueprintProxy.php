@@ -2,7 +2,7 @@
 
 namespace Weew\HttpBlueprint;
 
-use Weew\Foundation\Globals\ServerGlobal;
+use Weew\Globals\ServerGlobal;
 use Weew\Http\HttpRequestMethod;
 use Weew\Http\IHttpResponse;
 use Weew\Url\IUrl;
