@@ -13,9 +13,9 @@ use Weew\HttpBlueprint\Mapping;
 use Weew\Url\IUrl;
 use Weew\Url\Url;
 
-class BlueprintClientTest extends PHPUnit_Framework_TestCase {
-    private function createClient() {
-        $client = new BlueprintProxy();
+class BlueprintProxyTest extends PHPUnit_Framework_TestCase {
+    private function createProxy() {
+        $proxy = new BlueprintProxy();
         $v1 = new Blueprint('api/v1');
         $v1->get('foo', 'foo')
             ->get('foo/bar', 'bar');
@@ -24,29 +24,29 @@ class BlueprintClientTest extends PHPUnit_Framework_TestCase {
         $v2->get('foo', 'baz')
             ->get('bar', 'yolo');
 
-        $client->addBlueprint($v1);
-        $client->addBlueprint($v2);
+        $proxy->addBlueprint($v1);
+        $proxy->addBlueprint($v2);
 
-        return $client;
+        return $proxy;
     }
 
     public function test_get_url_and_request_method() {
-        $client = new BlueprintProxy();
+        $proxy = new BlueprintProxy();
 
-        $this->assertNotNull($client->getRequestMethod());
-        $this->assertTrue($client->getUrl() instanceof IUrl);
+        $this->assertNotNull($proxy->getRequestMethod());
+        $this->assertTrue($proxy->getUrl() instanceof IUrl);
     }
 
     public function test_get_mappings() {
-        $client = $this->createClient();
-        $mappings = $client->getMappings();
+        $proxy = $this->createProxy();
+        $mappings = $proxy->getMappings();
         $this->assertEquals(4, count($mappings));
         $this->assertTrue($mappings[0] instanceof Mapping);
     }
 
     public function test_create_error_response() {
-        $client = new BlueprintProxy();
-        $response = $client->createResponse();
+        $proxy = new BlueprintProxy();
+        $response = $proxy->createResponse();
 
         $this->assertTrue($response instanceof IHttpResponse);
         $this->assertEquals(
@@ -56,12 +56,12 @@ class BlueprintClientTest extends PHPUnit_Framework_TestCase {
     }
 
     public function test_create_good_response() {
-        $client = new BlueprintProxy();
+        $proxy = new BlueprintProxy();
         $blueprint = new Blueprint();
         $blueprint->post('foo');
 
-        $client->addBlueprint($blueprint);
-        $response = $client->createResponse(
+        $proxy->addBlueprint($blueprint);
+        $response = $proxy->createResponse(
             HttpRequestMethod::POST, new Url('foo'));
 
         $this->assertEquals(
