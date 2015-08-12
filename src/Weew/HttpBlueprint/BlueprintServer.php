@@ -10,39 +10,32 @@ class BlueprintServer {
     /**
      * @var IHttpServer
      */
-    private $server;
+    protected $server;
 
     /**
      * @var
      */
-    private $host;
+    protected $host;
 
     /**
      * @var
      */
-    private $port;
+    protected $port;
 
     /**
      * @var
      */
-    private $blueprintFile;
-
-    /**
-     * @var bool
-     */
-    private $enableOutput;
+    protected $blueprintFile;
 
     /**
      * @param $host
      * @param $port
      * @param $pathToBlueprintFile
-     * @param bool $enableOutput
      */
-    public function __construct($host, $port, $pathToBlueprintFile, $enableOutput = false) {
+    public function __construct($host, $port, $pathToBlueprintFile) {
         $this->host = $host;
         $this->port = $port;
         $this->blueprintFile = $pathToBlueprintFile;
-        $this->enableOutput = $enableOutput;
     }
 
     /**
@@ -81,7 +74,7 @@ class BlueprintServer {
             );
         }
 
-        $server = new HttpServer($this->host, $this->port, $this->blueprintFile, $this->enableOutput);
+        $server = new HttpServer($this->host, $this->port, $this->blueprintFile);
         $server->echoMessage(
             s('Using blueprint file %s', $this->blueprintFile)
         );
