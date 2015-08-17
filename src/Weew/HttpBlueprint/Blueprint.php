@@ -125,7 +125,7 @@ class Blueprint implements IArrayable {
      */
     public function handle($requestMethod, $uri, $response) {
         $url = new Url($this->url);
-        $url->getSegments()->addPath($uri);
+        $url->addPath($uri);
 
         $this->mappings[] = new Mapping(
             $requestMethod, $url, $response

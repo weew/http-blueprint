@@ -48,8 +48,8 @@ class MappingsMatcher implements IMappingsMatcher {
      * @return bool
      */
     public function matchUrl(IUrl $url, Mapping $mapping) {
-        $urlPath = $url->getSegments()->getPath();
-        $mappingPath = $mapping->getUrl()->getSegments()->getPath();
+        $urlPath = $url->getPath();
+        $mappingPath = $mapping->getUrl()->getPath();
 
         return $urlPath == $mappingPath;
     }
