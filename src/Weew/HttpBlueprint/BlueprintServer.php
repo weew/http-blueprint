@@ -13,43 +13,18 @@ class BlueprintServer {
     protected $server;
 
     /**
-     * @var
-     */
-    protected $host;
-
-    /**
-     * @var
-     */
-    protected $port;
-
-    /**
-     * @var
-     */
-    protected $blueprintFile;
-
-    /**
      * @param $host
      * @param $port
-     * @param $pathToBlueprintFile
+     * @param $blueprintFile
      */
-    public function __construct($host, $port, $pathToBlueprintFile) {
-        $this->host = $host;
-        $this->port = $port;
-        $this->blueprintFile = $pathToBlueprintFile;
+    public function __construct($host, $port, $blueprintFile) {
+        $this->server = $this->createHttpServer($host, $port, $blueprintFile);
     }
 
     /**
      * Start  server.
      */
     public function start() {
-        if ($this->server instanceof IHttpServer) {
-            if ($this->server->isRunning()) {
-                return;
-            }
-        } else {
-            $this->server = $this->createHttpServer();
-        }
-
         $this->server->start();
     }
 
@@ -57,27 +32,32 @@ class BlueprintServer {
      * Stop server.
      */
     public function stop() {
-        if ($this->server instanceof IHttpServer) {
-            if ($this->server->isRunning()) {
-                $this->server->stop();
-            }
-        }
+        $this->server->stop();
     }
 
     /**
+     * @return bool
+     */
+    public function isRunning() {
+        return $this->server->isRunning();
+    }
+
+    /**
+     * @param $host
+     * @param $port
+     * @param $blueprintFile
+     *
      * @return HttpServer
      */
-    public function createHttpServer() {
-        if ( ! is_file($this->blueprintFile)) {
+    protected function createHttpServer($host, $port, $blueprintFile) {
+        if ( ! is_file($blueprintFile)) {
             throw new LogicException(
-                s('Blueprint not found at %s.', $this->blueprintFile)
+                s('Blueprint not found at %s.', $blueprintFile)
             );
         }
 
-        $server = new HttpServer($this->host, $this->port, $this->blueprintFile);
-        $server->echoMessage(
-            s('Using blueprint file %s', $this->blueprintFile)
-        );
+        $server = new HttpServer($host, $port, $blueprintFile);
+        $server->echoMessage(s('Using blueprint file %s', $blueprintFile));
 
         return $server;
     }

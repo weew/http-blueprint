@@ -68,5 +68,7 @@ class BlueprintProxyTest extends PHPUnit_Framework_TestCase {
             HttpStatusCode::OK,
             $response->getStatusCode()
         );
+
+        $proxy->sendResponse(HttpRequestMethod::POST, new Url('foo'));
     }
 }

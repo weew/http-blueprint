@@ -2,7 +2,6 @@
 
 namespace Weew\HttpBlueprint;
 
-use Weew\Globals\ServerGlobal;
 use Weew\Http\HttpRequestMethod;
 use Weew\Http\IHttpResponse;
 use Weew\Url\IUrl;
@@ -25,23 +24,35 @@ class BlueprintProxy {
     protected $responseBuilder;
 
     /**
+     * @var array
+     */
+    protected $server;
+
+    /**
      * @param IMappingsMatcher $matcher
      * @param IResponseBuilder $responseBuilder
+     * @param array $server
      */
     public function __construct(
         IMappingsMatcher $matcher = null,
-        IResponseBuilder $responseBuilder = null
+        IResponseBuilder $responseBuilder = null,
+        array $server = null
     ) {
         if ( ! $matcher instanceof IMappingsMatcher) {
-            $matcher = new MappingsMatcher();
+            $matcher = $this->createMappingsMatcher();
         }
 
         if ( ! $responseBuilder instanceof IResponseBuilder) {
-            $responseBuilder = new ResponseBuilder();
+            $responseBuilder = $this->createResponseBuilder();
+        }
+
+        if ($server === null) {
+            $server = $_SERVER;
         }
 
         $this->matcher = $matcher;
         $this->responseBuilder = $responseBuilder;
+        $this->server = $server;
     }
 
     /**
@@ -58,7 +69,6 @@ class BlueprintProxy {
     public function sendResponse($requestMethod = null, IUrl $url = null) {
         $response = $this->createResponse($requestMethod, $url);
         $response->send();
-        exit;
     }
 
     /**
@@ -90,16 +100,14 @@ class BlueprintProxy {
      * @return string
      */
     public function getRequestMethod() {
-        return (new ServerGlobal())
-            ->get('REQUEST_METHOD', HttpRequestMethod::GET);
+        return array_get($this->server, 'REQUEST_METHOD', HttpRequestMethod::GET);
     }
 
     /**
      * @return IUrl
      */
     public function getUrl() {
-        return new Url((new ServerGlobal())
-            ->get('REQUEST_URI'));
+        return new Url(array_get($this->server, 'REQUEST_URI'));
     }
 
     /**
@@ -114,5 +122,19 @@ class BlueprintProxy {
         }
 
         return $mappings;
+    }
+
+    /**
+     * @return MappingsMatcher
+     */
+    protected function createMappingsMatcher() {
+        return new MappingsMatcher();
+    }
+
+    /**
+     * @return ResponseBuilder
+     */
+    protected function createResponseBuilder() {
+        return new ResponseBuilder();
     }
 }

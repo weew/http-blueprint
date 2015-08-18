@@ -12,14 +12,7 @@ class ResponseBuilder implements IResponseBuilder {
      * @return HttpResponse
      */
     public function buildDefaultErrorResponse() {
-        return new HttpResponse(HttpStatusCode::NOT_FOUND);
-    }
-
-    /**
-     * @return IHttpResponse
-     */
-    public function buildDefaultResponse() {
-        return new HttpResponse();
+        return $this->createResponse(HttpStatusCode::NOT_FOUND);
     }
 
     /**
@@ -40,10 +33,20 @@ class ResponseBuilder implements IResponseBuilder {
             }
 
             if ( ! $response instanceof IHttpResponse) {
-                $response = new HttpResponse(HttpStatusCode::OK, $response);
+                $response = $this->createResponse(HttpStatusCode::OK, $response);
             }
 
             return $response;
         }
+    }
+
+    /**
+     * @param int $statusCode
+     * @param null $content
+     *
+     * @return IHttpResponse
+     */
+    protected function createResponse($statusCode = HttpStatusCode::OK, $content = null) {
+        return new HttpResponse($statusCode, $content);
     }
 }

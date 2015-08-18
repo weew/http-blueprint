@@ -11,11 +11,6 @@ interface IResponseBuilder {
     function buildDefaultErrorResponse();
 
     /**
-     * @return IHttpResponse
-     */
-    function buildDefaultResponse();
-
-    /**
      * @param Mapping $mapping
      *
      * @return IHttpResponse

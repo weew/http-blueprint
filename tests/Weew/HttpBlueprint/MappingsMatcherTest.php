@@ -59,6 +59,12 @@ class MappingsMatcherTest extends PHPUnit_Framework_TestCase {
         $this->assertNull($candidate);
 
         $candidate = $matcher->match(
+            HttpRequestMethod::POST, new Url('yolo'), $mappings
+        );
+
+        $this->assertNull($candidate);
+
+        $candidate = $matcher->match(
             HttpRequestMethod::GET, new Url('foo'), $mappings
         );
 

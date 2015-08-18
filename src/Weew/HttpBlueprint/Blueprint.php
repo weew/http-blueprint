@@ -21,7 +21,7 @@ class Blueprint implements IArrayable {
      * @param string $baseUrl
      */
     public function __construct($baseUrl = '') {
-        $this->url = $baseUrl;
+        $this->baseUrl($baseUrl);
     }
 
     /**

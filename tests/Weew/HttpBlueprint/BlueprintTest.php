@@ -19,17 +19,22 @@ class BlueprintTest extends PHPUnit_Framework_TestCase {
     public function test_to_array() {
         $blueprint = new Blueprint('/api/v1');
         $blueprint
-            ->get('foo', 'foo')
             ->get('bar', 'bar')
-            ->post('foo', 'foo')
-            ->put('foo', 'foo')
-            ->update('foo', 'foo')
-            ->delete('foo', 'foo')
-            ->path('foo', 'foo');
+            ->baseUrl('yolo')
+                ->post('foo', 'foo')
+                ->put('foo', 'foo')
+                ->update('foo', 'foo')
+                ->delete('foo', 'foo')
+                ->path('foo', 'foo');
 
         $mappings = $blueprint->toArray();
-        $mapping = new Mapping(HttpRequestMethod::GET, new Url('/api/v1/foo'), 'foo');
-        $this->assertEquals(7, count($mappings));
+        $this->assertEquals(6, count($mappings));
+
+        $mapping = new Mapping(HttpRequestMethod::GET, new Url('/api/v1/bar'), 'bar');
         $this->assertEquals($mapping->toArray(), $mappings[0]);
+
+        $mappings = $blueprint->toArray();
+        $mapping = new Mapping(HttpRequestMethod::POST, new Url('/yolo/foo'), 'foo');
+        $this->assertEquals($mapping->toArray(), $mappings[1]);
     }
 }
