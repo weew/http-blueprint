@@ -5,11 +5,12 @@ namespace Tests\Weew\HttpBlueprint;
 use Closure;
 use PHPUnit_Framework_TestCase;
 use Weew\Http\HttpHeaders;
+use Weew\Http\HttpRequestMethod;
 use Weew\Http\HttpResponse;
 use Weew\Http\HttpStatusCode;
 use Weew\Http\IHttpResponse;
-use Weew\HttpBlueprint\Mapping;
 use Weew\HttpBlueprint\ResponseBuilder;
+use Weew\Router\Route;
 
 class ResponseBuilderTest extends PHPUnit_Framework_TestCase {
     public function test_build_default_response() {
@@ -25,7 +26,9 @@ class ResponseBuilderTest extends PHPUnit_Framework_TestCase {
 
     public function test_build_response_for_mapping_with_no_response() {
         $builder = new ResponseBuilder();
-        $response = $builder->buildResponseForMapping(new Mapping());
+        $response = $builder->buildResponseForRoute(
+            new Route(HttpRequestMethod::GET, 'foo', null)
+        );
 
         $this->assertEquals(
             HttpStatusCode::OK,
@@ -35,39 +38,35 @@ class ResponseBuilderTest extends PHPUnit_Framework_TestCase {
 
     public function test_build_response_for_mapping_with_string_response() {
         $builder = new ResponseBuilder();
-        $mapping = new Mapping();
-        $mapping->setResponse('foo');
+        $route = new Route(HttpRequestMethod::GET, 'foo', 'foo');
 
-        $response = $builder->buildResponseForMapping($mapping);
+        $response = $builder->buildResponseForRoute($route);
 
         $this->assertEquals(
             HttpStatusCode::OK,
             $response->getStatusCode()
         );
         $this->assertEquals(
-            $mapping->getResponse(),
+            $route->getValue(),
             $response->getContent()
         );
     }
 
     public function test_build_response_for_mapping_with_abstract_response() {
         $builder = new ResponseBuilder();
-        $mapping = new Mapping();
-        $mapping->setResponse(function() {
+        $route = new Route(HttpRequestMethod::GET, 'foo', function() {
             return 2 + 2;
         });
 
-        $response = $builder->buildResponseForMapping($mapping);
+        $response = $builder->buildResponseForRoute($route);
 
         $this->assertEquals(
             HttpStatusCode::OK,
             $response->getStatusCode()
         );
-        $content = $mapping->getResponse();
-
-        if ($content instanceof Closure) {
-            $content = $content();
-        }
+        /** @var Callable $content */
+        $content = $route->getValue();
+        $content = $content();
 
         $this->assertEquals(
             $response->getContent(), $content
@@ -76,27 +75,27 @@ class ResponseBuilderTest extends PHPUnit_Framework_TestCase {
 
     public function test_build_response_for_mapping_with_custom_response() {
         $builder = new ResponseBuilder();
-        $mapping = new Mapping();
-        $mappingResponse = new HttpResponse(
+        $route = new Route(HttpRequestMethod::GET, 'foo', 'bar');
+        $routeResponse = new HttpResponse(
             HttpStatusCode::NOT_FOUND,
             'Yada yada',
             new HttpHeaders(['foo' => 'bar', 'bar' => 'foo'])
         );
-        $mapping->setResponse($mappingResponse);
-        $response = $builder->buildResponseForMapping($mapping);
+        $route->setValue($routeResponse);
+        $response = $builder->buildResponseForRoute($route);
 
         $this->assertEquals(
-            $mappingResponse->getStatusCode(),
+            $routeResponse->getStatusCode(),
             $response->getStatusCode()
         );
 
         $this->assertEquals(
-            $mappingResponse->getHeaders()->get('foo'),
+            $routeResponse->getHeaders()->get('foo'),
             $response->getHeaders()->get('foo')
         );
 
         $this->assertEquals(
-            $mappingResponse->getHeaders()->get('bar'),
+            $routeResponse->getHeaders()->get('bar'),
             $response->getHeaders()->get('bar')
         );
     }

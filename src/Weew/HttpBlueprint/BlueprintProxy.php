@@ -4,19 +4,17 @@ namespace Weew\HttpBlueprint;
 
 use Weew\Http\HttpRequestMethod;
 use Weew\Http\IHttpResponse;
+use Weew\Router\IRoute;
+use Weew\Router\IRouter;
+use Weew\Router\Router;
 use Weew\Url\IUrl;
 use Weew\Url\Url;
 
 class BlueprintProxy {
     /**
-     * @var IMappingsMatcher
+     * @var IRouter
      */
-    protected $matcher;
-
-    /**
-     * @var array
-     */
-    protected $blueprints = [];
+    protected $router;
 
     /**
      * @var IResponseBuilder
@@ -29,17 +27,17 @@ class BlueprintProxy {
     protected $server;
 
     /**
-     * @param IMappingsMatcher $matcher
+     * @param IRouter $router
      * @param IResponseBuilder $responseBuilder
      * @param array $server
      */
     public function __construct(
-        IMappingsMatcher $matcher = null,
+        IRouter $router = null,
         IResponseBuilder $responseBuilder = null,
         array $server = null
     ) {
-        if ( ! $matcher instanceof IMappingsMatcher) {
-            $matcher = $this->createMappingsMatcher();
+        if ( ! $router instanceof IRouter) {
+            $router = $this->createRouter();
         }
 
         if ( ! $responseBuilder instanceof IResponseBuilder) {
@@ -50,16 +48,23 @@ class BlueprintProxy {
             $server = $_SERVER;
         }
 
-        $this->matcher = $matcher;
+        $this->router = $router;
         $this->responseBuilder = $responseBuilder;
         $this->server = $server;
     }
 
     /**
-     * @param Blueprint $blueprint
+     * @return IRouter
      */
-    public function addBlueprint(Blueprint $blueprint) {
-        $this->blueprints[] = $blueprint;
+    public function getRouter() {
+        return $this->router;
+    }
+
+    /**
+     * @param IRouter $router
+     */
+    public function setRouter(IRouter $router) {
+        $this->router = $router;
     }
 
     /**
@@ -86,11 +91,10 @@ class BlueprintProxy {
             $url = $this->getUrl();
         }
 
-        $mappings = $this->getMappings();
-        $mapping = $this->matcher->match($requestMethod, $url, $mappings);
+        $route = $this->router->match($requestMethod, $url);
 
-        if ($mapping instanceof Mapping) {
-            return $this->responseBuilder->buildResponseForMapping($mapping);
+        if ($route instanceof IRoute) {
+            return $this->responseBuilder->buildResponseForRoute($route);
         }
 
         return $this->responseBuilder->buildDefaultErrorResponse();
@@ -111,24 +115,10 @@ class BlueprintProxy {
     }
 
     /**
-     * @return array
+     * @return Router
      */
-    public function getMappings() {
-        $mappings = [];
-
-        /** @var Blueprint $blueprint */
-        foreach ($this->blueprints as $blueprint) {
-            $mappings = array_merge($mappings, $blueprint->getMappings());
-        }
-
-        return $mappings;
-    }
-
-    /**
-     * @return MappingsMatcher
-     */
-    protected function createMappingsMatcher() {
-        return new MappingsMatcher();
+    protected function createRouter() {
+        return new Router();
     }
 
     /**

@@ -6,6 +6,7 @@ use Closure;
 use Weew\Http\HttpResponse;
 use Weew\Http\HttpStatusCode;
 use Weew\Http\IHttpResponse;
+use Weew\Router\IRoute;
 
 class ResponseBuilder implements IResponseBuilder {
     /**
@@ -16,12 +17,12 @@ class ResponseBuilder implements IResponseBuilder {
     }
 
     /**
-     * @param Mapping $mapping
+     * @param IRoute $route
      *
      * @return null|HttpResponse
      */
-    public function buildResponseForMapping(Mapping $mapping) {
-        $abstract = $mapping->getResponse();
+    public function buildResponseForRoute(IRoute $route) {
+        $abstract = $route->getValue();
 
         if ($abstract instanceof IHttpResponse) {
             return $abstract;

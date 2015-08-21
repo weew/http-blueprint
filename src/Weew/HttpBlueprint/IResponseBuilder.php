@@ -3,6 +3,7 @@
 namespace Weew\HttpBlueprint;
 
 use Weew\Http\IHttpResponse;
+use Weew\Router\IRoute;
 
 interface IResponseBuilder {
     /**
@@ -11,9 +12,9 @@ interface IResponseBuilder {
     function buildDefaultErrorResponse();
 
     /**
-     * @param Mapping $mapping
+     * @param IRoute $route
      *
      * @return IHttpResponse
      */
-    function buildResponseForMapping(Mapping $mapping);
+    function buildResponseForRoute(IRoute $route);
 }
