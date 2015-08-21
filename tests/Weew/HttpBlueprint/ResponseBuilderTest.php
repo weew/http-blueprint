@@ -54,7 +54,7 @@ class ResponseBuilderTest extends PHPUnit_Framework_TestCase {
 
     public function test_build_response_for_mapping_with_abstract_response() {
         $builder = new ResponseBuilder();
-        $route = new Route(HttpRequestMethod::GET, 'foo', function() {
+        $route = new Route(HttpRequestMethod::GET, 'foo/{name}', function(array $parameters) {
             return 2 + 2;
         });
 
@@ -66,7 +66,7 @@ class ResponseBuilderTest extends PHPUnit_Framework_TestCase {
         );
         /** @var Callable $content */
         $content = $route->getValue();
-        $content = $content();
+        $content = $content([]);
 
         $this->assertEquals(
             $response->getContent(), $content

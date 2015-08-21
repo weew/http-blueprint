@@ -30,7 +30,7 @@ class ResponseBuilder implements IResponseBuilder {
             $response = $abstract;
 
             if ($abstract instanceof Closure) {
-                $response = $abstract();
+                $response = $abstract($route->getParameters());
             }
 
             if ( ! $response instanceof IHttpResponse) {
