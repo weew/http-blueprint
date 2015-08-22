@@ -103,14 +103,14 @@ class BlueprintProxy {
     /**
      * @return string
      */
-    public function getRequestMethod() {
+    protected function getRequestMethod() {
         return array_get($this->server, 'REQUEST_METHOD', HttpRequestMethod::GET);
     }
 
     /**
      * @return IUrl
      */
-    public function getUrl() {
+    protected function getUrl() {
         return new Url(array_get($this->server, 'REQUEST_URI'));
     }
 

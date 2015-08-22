@@ -2,7 +2,6 @@
 
 namespace Tests\Weew\HttpBlueprint;
 
-use Closure;
 use PHPUnit_Framework_TestCase;
 use Weew\Http\HttpHeaders;
 use Weew\Http\HttpRequestMethod;

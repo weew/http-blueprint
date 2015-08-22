@@ -21,13 +21,6 @@ class BlueprintProxyTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue($proxy->getRouter() === $router);
     }
 
-    public function test_get_url_and_request_method() {
-        $proxy = new BlueprintProxy();
-
-        $this->assertNotNull($proxy->getRequestMethod());
-        $this->assertTrue($proxy->getUrl() instanceof IUrl);
-    }
-
     public function test_create_error_response() {
         $proxy = new BlueprintProxy();
         $response = $proxy->createResponse();
