@@ -63,7 +63,7 @@ class ResponseBuilderTest extends PHPUnit_Framework_TestCase {
             HttpStatusCode::OK,
             $response->getStatusCode()
         );
-        /** @var Callable $content */
+        /** @var callable $content */
         $content = $route->getValue();
         $content = $content([]);
 
