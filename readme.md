@@ -86,4 +86,4 @@ $server->stop();
 
 For detailed information about requests, responses or the router, please
 check out the links above. You'll find some basic documentation there.
-2
+
