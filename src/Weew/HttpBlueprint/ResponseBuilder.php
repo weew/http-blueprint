@@ -6,6 +6,7 @@ use Closure;
 use Weew\Http\HttpResponse;
 use Weew\Http\HttpStatusCode;
 use Weew\Http\IHttpResponse;
+use Weew\Http\Requests\CurrentRequest;
 use Weew\Router\IRoute;
 
 class ResponseBuilder implements IResponseBuilder {
@@ -30,7 +31,7 @@ class ResponseBuilder implements IResponseBuilder {
             $response = $abstract;
 
             if ($abstract instanceof Closure) {
-                $response = $abstract($route->getParameters());
+                $response = $abstract(new CurrentRequest(), $route->getParameters());
             }
 
             if ( ! $response instanceof IHttpResponse) {

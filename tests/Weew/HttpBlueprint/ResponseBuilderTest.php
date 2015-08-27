@@ -4,9 +4,11 @@ namespace Tests\Weew\HttpBlueprint;
 
 use PHPUnit_Framework_TestCase;
 use Weew\Http\HttpHeaders;
+use Weew\Http\HttpRequest;
 use Weew\Http\HttpRequestMethod;
 use Weew\Http\HttpResponse;
 use Weew\Http\HttpStatusCode;
+use Weew\Http\IHttpRequest;
 use Weew\Http\IHttpResponse;
 use Weew\HttpBlueprint\ResponseBuilder;
 use Weew\Router\Route;
@@ -53,9 +55,13 @@ class ResponseBuilderTest extends PHPUnit_Framework_TestCase {
 
     public function test_build_response_for_mapping_with_abstract_response() {
         $builder = new ResponseBuilder();
-        $route = new Route(HttpRequestMethod::GET, 'foo/{name}', function(array $parameters) {
-            return 2 + 2;
-        });
+        $route = new Route(
+            HttpRequestMethod::GET,
+            'foo/{name}',
+            function(IHttpRequest $request, array $parameters) {
+                return 2 + 2;
+            }
+        );
 
         $response = $builder->buildResponseForRoute($route);
 
@@ -65,7 +71,7 @@ class ResponseBuilderTest extends PHPUnit_Framework_TestCase {
         );
         /** @var callable $content */
         $content = $route->getValue();
-        $content = $content([]);
+        $content = $content(new HttpRequest(), []);
 
         $this->assertEquals(
             $response->getContent(), $content
