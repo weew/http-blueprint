@@ -5,23 +5,17 @@
 [![Coverage Status](https://coveralls.io/repos/weew/php-http-blueprint/badge.svg?branch=master&service=github)](https://coveralls.io/github/weew/php-http-blueprint?branch=master)
 [![License](https://poser.pugx.org/weew/php-http-blueprint/license)](https://packagist.org/packages/weew/php-http-blueprint)
 
-## Related projects
+## Table of contents
 
-[HTTP Layer](https://github.com/weew/php-http): offers response and request objects,
-handles cookies, headers and much more.
-
-[HTTP Server](https://github.com/weew/php-http-server): allows you to start
-an http server in a directory of your choice.
-
-[HTTP Client](https://github.com/weew/php-http-client): allows you to send
-HttpRequest and to receive HttpResponse objects.
-
-[Router](https://github.com/weew/php-router): allows you to create complex
-routes and map them to a response.
+- [Installation](#installation)
+- [Introduction](#introduction)
+- [Creating a blueprint](#creating-a-blueprint)
+- [Starting and stopping the server](#starting-and-stopping-the-server)
+- [Related projects](#related-projects)
 
 ## Installation
 
-`composer install weew/php-http-blueprint`
+`composer require weew/php-http-blueprint`
 
 ## Introduction
 
@@ -38,9 +32,7 @@ the endpoints, but had instead to actually test the whole http communication and
 resulting requests and responses. But at the end I think this is a really
 useful package and might be used elsewhere as well.
 
-## Usage
-
-#### Setting up your blueprint
+## Creating a blueprint
 
 Create a file that will be used as your blueprint. Register your routes
 in there. Let the proxy to the rest.
@@ -66,7 +58,7 @@ $proxy->getRouter()
 $proxy->sendResponse();
 ```
 
-#### Starting the server
+## Starting and stopping the server
 
 It is very easy. Just pass in the hostname, your desired port, and the
 path to the blueprint file you've created.
@@ -82,8 +74,16 @@ When you're done, simply stop the server.
 $server->stop();
 ```
 
-#### Further info
+## Related projects
 
-For detailed information about requests, responses or the router, please
-check out the links above. You'll find some basic documentation there.
+[HTTP Layer](https://github.com/weew/php-http): offers response and request objects,
+handles cookies, headers and much more.
 
+[HTTP Server](https://github.com/weew/php-http-server): allows you to start
+an http server in a directory of your choice.
+
+[HTTP Client](https://github.com/weew/php-http-client): allows you to send
+HttpRequest and to receive HttpResponse objects.
+
+[Router](https://github.com/weew/php-router): allows you to create complex
+routes and map them to a response.
