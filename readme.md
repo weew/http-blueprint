@@ -76,14 +76,11 @@ $server->stop();
 
 ## Related projects
 
-[HTTP Layer](https://github.com/weew/php-http): offers response and request objects,
+- [HTTP Layer](https://github.com/weew/php-http): offers response and request objects,
 handles cookies, headers and much more.
-
-[HTTP Server](https://github.com/weew/php-http-server): allows you to start
+- [HTTP Server](https://github.com/weew/php-http-server): allows you to start
 an http server in a directory of your choice.
-
-[HTTP Client](https://github.com/weew/php-http-client): allows you to send
+- [HTTP Client](https://github.com/weew/php-http-client): allows you to send
 HttpRequest and to receive HttpResponse objects.
-
-[Router](https://github.com/weew/php-router): allows you to create complex
+- [Router](https://github.com/weew/php-router): allows you to create complex
 routes and map them to a response.
