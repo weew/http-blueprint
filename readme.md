@@ -1,9 +1,11 @@
 # HTTP blueprint server
 
-[![Build Status](https://travis-ci.org/weew/php-http-blueprint.svg?branch=master)](https://travis-ci.org/weew/php-http-blueprint)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/weew/php-http-blueprint/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/weew/php-http-blueprint/?branch=master)
-[![Coverage Status](https://coveralls.io/repos/weew/php-http-blueprint/badge.svg?branch=master&service=github)](https://coveralls.io/github/weew/php-http-blueprint?branch=master)
-[![License](https://poser.pugx.org/weew/php-http-blueprint/license)](https://packagist.org/packages/weew/php-http-blueprint)
+[![Build Status](https://img.shields.io/travis/weew/php-http-blueprint.svg)](https://travis-ci.org/weew/php-http-blueprint)
+[![Code Quality](https://img.shields.io/scrutinizer/g/weew/php-http-blueprint.svg)](https://scrutinizer-ci.com/g/weew/php-http-blueprint)
+[![Test Coverage](https://img.shields.io/coveralls/weew/php-http-blueprint.svg)](https://coveralls.io/github/weew/php-http-blueprint)
+[![Dependencies](https://img.shields.io/versioneye/d/php/weew:php-http-blueprint.svg)](https://versioneye.com/php/weew:php-http-blueprint)
+[![Version](https://img.shields.io/packagist/v/weew/php-http-blueprint.svg)](https://packagist.org/packages/weew/php-http-blueprint)
+[![Licence](https://img.shields.io/packagist/l/weew/php-http-blueprint.svg)](https://packagist.org/packages/weew/php-http-blueprint)
 
 ## Table of contents
 
