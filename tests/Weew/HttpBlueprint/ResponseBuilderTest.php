@@ -48,7 +48,7 @@ class ResponseBuilderTest extends PHPUnit_Framework_TestCase {
             $response->getStatusCode()
         );
         $this->assertEquals(
-            $route->getValue(),
+            $route->getHandler(),
             $response->getContent()
         );
     }
@@ -70,7 +70,7 @@ class ResponseBuilderTest extends PHPUnit_Framework_TestCase {
             $response->getStatusCode()
         );
         /** @var callable $content */
-        $content = $route->getValue();
+        $content = $route->getHandler();
         $content = $content(new HttpRequest(), []);
 
         $this->assertEquals(
@@ -86,7 +86,7 @@ class ResponseBuilderTest extends PHPUnit_Framework_TestCase {
             'Yada yada',
             new HttpHeaders(['foo' => 'bar', 'bar' => 'foo'])
         );
-        $route->setValue($routeResponse);
+        $route->setHandler($routeResponse);
         $response = $builder->buildResponseForRoute($route);
 
         $this->assertEquals(
