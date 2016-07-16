@@ -1,11 +1,11 @@
 # HTTP blueprint server
 
-[![Build Status](https://img.shields.io/travis/weew/php-http-blueprint.svg)](https://travis-ci.org/weew/php-http-blueprint)
-[![Code Quality](https://img.shields.io/scrutinizer/g/weew/php-http-blueprint.svg)](https://scrutinizer-ci.com/g/weew/php-http-blueprint)
-[![Test Coverage](https://img.shields.io/coveralls/weew/php-http-blueprint.svg)](https://coveralls.io/github/weew/php-http-blueprint)
-[![Dependencies](https://img.shields.io/versioneye/d/php/weew:php-http-blueprint.svg)](https://versioneye.com/php/weew:php-http-blueprint)
-[![Version](https://img.shields.io/packagist/v/weew/php-http-blueprint.svg)](https://packagist.org/packages/weew/php-http-blueprint)
-[![Licence](https://img.shields.io/packagist/l/weew/php-http-blueprint.svg)](https://packagist.org/packages/weew/php-http-blueprint)
+[![Build Status](https://img.shields.io/travis/weew/http-blueprint.svg)](https://travis-ci.org/weew/http-blueprint)
+[![Code Quality](https://img.shields.io/scrutinizer/g/weew/http-blueprint.svg)](https://scrutinizer-ci.com/g/weew/http-blueprint)
+[![Test Coverage](https://img.shields.io/coveralls/weew/http-blueprint.svg)](https://coveralls.io/github/weew/http-blueprint)
+[![Dependencies](https://img.shields.io/versioneye/d/php/weew:http-blueprint.svg)](https://versioneye.com/php/weew:http-blueprint)
+[![Version](https://img.shields.io/packagist/v/weew/http-blueprint.svg)](https://packagist.org/packages/weew/http-blueprint)
+[![Licence](https://img.shields.io/packagist/l/weew/http-blueprint.svg)](https://packagist.org/packages/weew/http-blueprint)
 
 ## Table of contents
 
@@ -17,7 +17,7 @@
 
 ## Installation
 
-`composer require weew/php-http-blueprint`
+`composer require weew/http-blueprint`
 
 ## Introduction
 
@@ -28,8 +28,8 @@ The proxy is basically responsible for grabbing all of the registered routes,
 figuring out which one should be called and returning an http response.
 
 This package was mainly built for testing of the
-[http layer](https://github.com/weew/php-http) and the
-[http client](https://github.com/weew/php-http-client) where I could not simply mock
+[http layer](https://github.com/weew/http) and the
+[http client](https://github.com/weew/http-client) where I could not simply mock
 the endpoints, but had instead to actually test the whole http communication and the
 resulting requests and responses. But at the end I think this is a really
 useful package and might be used elsewhere as well.
@@ -78,11 +78,11 @@ $server->stop();
 
 ## Related projects
 
-- [HTTP Layer](https://github.com/weew/php-http): offers response and request objects,
+- [HTTP Layer](https://github.com/weew/http): offers response and request objects,
 handles cookies, headers and much more.
-- [HTTP Server](https://github.com/weew/php-http-server): allows you to start
+- [HTTP Server](https://github.com/weew/http-server): allows you to start
 an http server in a directory of your choice.
-- [HTTP Client](https://github.com/weew/php-http-client): allows you to send
+- [HTTP Client](https://github.com/weew/http-client): allows you to send
 HttpRequest and to receive HttpResponse objects.
-- [Router](https://github.com/weew/php-router): allows you to create complex
+- [Router](https://github.com/weew/router): allows you to create complex
 routes and map them to a response.
