@@ -23,7 +23,7 @@ class ResponseBuilder implements IResponseBuilder {
      * @return null|HttpResponse
      */
     public function buildResponseForRoute(IRoute $route) {
-        $abstract = $route->getHandler();
+        $abstract = $route->getAction();
 
         if ($abstract instanceof IHttpResponse) {
             return $abstract;

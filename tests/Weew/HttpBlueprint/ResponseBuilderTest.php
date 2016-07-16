@@ -28,7 +28,7 @@ class ResponseBuilderTest extends PHPUnit_Framework_TestCase {
     public function test_build_response_for_mapping_with_no_response() {
         $builder = new ResponseBuilder();
         $response = $builder->buildResponseForRoute(
-            new Route(HttpRequestMethod::GET, 'foo', null)
+            new Route([HttpRequestMethod::GET], 'foo', null)
         );
 
         $this->assertEquals(
@@ -39,7 +39,7 @@ class ResponseBuilderTest extends PHPUnit_Framework_TestCase {
 
     public function test_build_response_for_mapping_with_string_response() {
         $builder = new ResponseBuilder();
-        $route = new Route(HttpRequestMethod::GET, 'foo', 'foo');
+        $route = new Route([HttpRequestMethod::GET], 'foo', 'foo');
 
         $response = $builder->buildResponseForRoute($route);
 
@@ -48,7 +48,7 @@ class ResponseBuilderTest extends PHPUnit_Framework_TestCase {
             $response->getStatusCode()
         );
         $this->assertEquals(
-            $route->getHandler(),
+            $route->getAction(),
             $response->getContent()
         );
     }
@@ -56,7 +56,7 @@ class ResponseBuilderTest extends PHPUnit_Framework_TestCase {
     public function test_build_response_for_mapping_with_abstract_response() {
         $builder = new ResponseBuilder();
         $route = new Route(
-            HttpRequestMethod::GET,
+            [HttpRequestMethod::GET],
             'foo/{name}',
             function(IHttpRequest $request, array $parameters) {
                 return 2 + 2;
@@ -70,7 +70,7 @@ class ResponseBuilderTest extends PHPUnit_Framework_TestCase {
             $response->getStatusCode()
         );
         /** @var callable $content */
-        $content = $route->getHandler();
+        $content = $route->getAction();
         $content = $content(new HttpRequest(), []);
 
         $this->assertEquals(
@@ -80,13 +80,13 @@ class ResponseBuilderTest extends PHPUnit_Framework_TestCase {
 
     public function test_build_response_for_mapping_with_custom_response() {
         $builder = new ResponseBuilder();
-        $route = new Route(HttpRequestMethod::GET, 'foo', 'bar');
+        $route = new Route([HttpRequestMethod::GET], 'foo', 'bar');
         $routeResponse = new HttpResponse(
             HttpStatusCode::NOT_FOUND,
             'Yada yada',
             new HttpHeaders(['foo' => 'bar', 'bar' => 'foo'])
         );
-        $route->setHandler($routeResponse);
+        $route->setAction($routeResponse);
         $response = $builder->buildResponseForRoute($route);
 
         $this->assertEquals(
