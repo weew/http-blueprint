@@ -14,12 +14,9 @@
         }
     },
     "require": {
-        "weew/http": "^1.0",
-        "weew/url": "^1.0",
-        "weew/helpers-string": "^1.0",
-        "weew/helpers-array": "^1.0",
-        "weew/http-server": "^1.0",
-        "weew/router": "^2.0"
+        "weew/http": "^1.11",
+        "weew/router": "^2.8",
+        "weew/http-server": "^1.1"
     },
     "require-dev": {
         "phpunit/phpunit": "^4.7",
